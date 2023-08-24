@@ -1,7 +1,5 @@
-import { Action } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState, store } from "../redux/store";
-import { Chat } from '../types/chatType';
 
 export default async function request<T>(
   method: string,
@@ -9,11 +7,14 @@ export default async function request<T>(
   data: object = {},
   headers: object = {},
   auth: boolean = true,
-  nameState: keyof RootState,
+  nameState: keyof RootState | undefined,
   initStateAction: any,
   makeRequest: boolean = true
 ): Promise<T> {
-  const state: T | null = store.getState()[nameState] as T;
+  let state: T | null | undefined = undefined;
+  if (nameState && initStateAction) {
+    state = store.getState()[nameState] as T;
+  }
 
   if (['POST', 'PUT', 'DELETE'].includes(method)) {
     makeRequest = true;
@@ -28,23 +29,43 @@ export default async function request<T>(
   }
 
   try {
-    if (state === null || makeRequest) {
-      const response = await axios.request({
-        method: method,
-        url: uri,
-        data: data,
-        headers: headers,
-      });
-      store.dispatch(initStateAction(response.data.data))
-      console.log("API")
-      return response.data.data
+    if (state !== undefined) {
+      if (state === null || makeRequest) {
+        return await fetchData<T>(method, uri, data, headers, initStateAction, state);
+      } else {
+        console.log("Obteniendo datos del ESTADO")
+        return state
+      }
     } else {
-      console.log("ESTADO")
-      return state
+      return await fetchData<T>(method, uri, data, headers, initStateAction, state);
     }
   } catch (error) {
-    console.log(error)
     throw error;
+  }
+}
+
+async function fetchData<T>(
+  method: string,
+  uri: string,
+  data: object = {},
+  headers: object = {},
+  initStateAction: any,
+  state: T | null | undefined
+) : Promise<T> {
+  try {
+    const response = await axios.request({
+      method: method,
+      url: uri,
+      data: data,
+      headers: headers,
+    });
+    if (state !== undefined) {
+      store.dispatch(initStateAction(response.data))
+    }
+    console.log("Obteniendo datos de la API")
+    return response.data
+  } catch (error: any){
+    throw error.response.data
   }
 }
 

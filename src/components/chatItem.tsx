@@ -12,11 +12,12 @@ export interface Props {
 }
 
 export default function ChatItem(props: Props) {
-  const chat: Chat[] | null = useSelector((state:RootState) => state.chat)
+  const chat: {data: Chat[]} | null = useSelector((state:RootState) => state.chat)
   const dispatch = useDispatch()
   const id: number = props.id;
-  const index = chat.findIndex( (x: Chat) => x.id == id)
-  const item: Chat = chat[index];
+
+  const index = chat.data.findIndex( (x: Chat) => x.id == id)
+  const item: Chat = chat.data[index];
 
   const star = (): void => {
     dispatch(update({id: id}))
@@ -40,7 +41,7 @@ export default function ChatItem(props: Props) {
             color={Colors.secondaryText}
             numberOfLines={1}
             >Hola, que tal?</Text>
-            <TouchableOpacity onPress={() => star()}>
+            <TouchableOpacity onPress={star}>
             <Ionicons name={item.favorite ? 'star' : 'star-outline'} size={17} color={Colors.secondaryText} />
             </TouchableOpacity>
         </ListItem.Part>

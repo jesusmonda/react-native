@@ -3,7 +3,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, TouchableOpacity } from 'react-native-ui-lib';
 
-export default function HomeLayout() {
+export default function LoginLayout() {
   return (
     <Stack
       screenOptions={{
@@ -17,10 +17,11 @@ export default function HomeLayout() {
         options={{
           headerShown: true,
           title: "",
+          headerBackVisible: false,
           headerRight: () => {
             return (
               <TouchableOpacity>
-                <Ionicons name="md-notifications-outline" size={24} color={Colors.secondaryText} />
+                <Ionicons name="person-outline" size={24} color={Colors.secondaryText} />
               </TouchableOpacity>
             )
           }

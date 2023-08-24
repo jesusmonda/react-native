@@ -8,14 +8,14 @@ export interface ChatUpdate {
 
 export const chatSlice = createSlice({
   name: 'chat',
-  initialState: null as Chat[] | null,
+  initialState: null as {data: Chat[]} | null,
   reducers: {
-    init: (state, action: PayloadAction<Chat[]>) => {
+    init: (state, action: PayloadAction<{data: Chat[]}>) => {
       return action.payload
     },
     update: (state, action: PayloadAction<ChatUpdate>) => {
-      const id = state.findIndex( (x: Chat) => x.id === action.payload.id)
-      state[id].favorite = (state[id].favorite) ? !state[id].favorite : true
+      const id = state.data.findIndex( (x: Chat) => x.id === action.payload.id)
+      state.data[id].favorite = (state.data[id].favorite) ? !state.data[id].favorite : true
       return state
     },
   },

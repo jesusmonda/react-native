@@ -3,7 +3,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, TouchableOpacity } from 'react-native-ui-lib';
 
-export default function AppLayout() {
+export default function ProfileLayout() {
   return (
     <Stack
       screenOptions={{

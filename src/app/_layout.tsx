@@ -1,12 +1,11 @@
 import { Stack } from 'expo-router';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { Colors } from 'react-native-ui-lib';
 import { store } from '../redux/store';
-import { Ionicons } from '@expo/vector-icons';
 require('react-native-ui-lib/config').setConfig({appScheme: 'dark'});
-import { Colors, Text, TouchableOpacity } from 'react-native-ui-lib';
 
-export default function AppLayout() {
+export default function LoginLayout() {
   return (
     <Provider store={store}>
       <Stack
@@ -18,6 +17,13 @@ export default function AppLayout() {
         >
         <Stack.Screen
           name="index"
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="login"
           options={{
             headerShown: false,
           }}
@@ -40,26 +46,3 @@ export default function AppLayout() {
   </Provider>
   );
 }
-
-Colors.loadColors({
-  primaryTextLight: '#1c1c1c',
-  secondaryTextLight: '#a5a5a5',
-  primaryTextDark: '',
-  secondaryTextDark: '',
-  primaryColor: '#027fe9',
-});
-
-Colors.loadSchemes({
-  light: {
-    screenBG: '#fff',
-    primaryText: Colors.primaryTextLight,
-    secondaryText: Colors.secondaryTextLight,
-    primaryColor: Colors.primaryColor,
-  },
-  dark: {
-    screenBG: '#000',
-    primaryText: Colors.primaryTextDark,
-    secondaryText: Colors.secondaryTextDark,
-    primaryColor: Colors.primaryColor,
-  }
-});

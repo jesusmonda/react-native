@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import getChats from '../../../../services/chatService';
 import type { Chat } from '../../../../types/chatType';
 import ChatItem from '../../../../components/chatItem';
+import { useAuth } from '../../../../context/auth';
 
 export default function Home() {
   const [chats, setChats] = useState<Chat[]>();
@@ -20,8 +21,8 @@ export default function Home() {
   }, []);
 
   const init = async (makeRequest: boolean) => {
-    let response: Chat[] = await getChats(makeRequest)
-    setChats(response);
+    let response = await getChats(makeRequest)
+    setChats(response.data);
   }
 
   const onRefresh = () => {
@@ -44,7 +45,7 @@ export default function Home() {
             <Button label={'Press'} size={Button.sizes.large} link={true} color={Colors.secondaryText} />
           </View>
           <View marginT-20>
-            <Text color={Colors.primaryText} text40>Lorem</Text>
+            <Text color={Colors.primaryText} text40>Usuario logeado {useAuth().user.username}</Text>
             <Text color={Colors.secondaryText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pellentesque dui eu justo tincidunt, non sodales quam interdum. Aliquam aliquam ornare enim porta condimentum. In nec nisl aliquam, suscipit nunc sed, sollicitudin sem. In tincidunt sed mi eu elementum. Praesent dui orci, dignissim id diam at, ullamcorper finibus tellus. Nullam sapien enim, ultrices eu eleifend ac, pulvinar id elit. Fusce at dignissim ante, at dignissim purus. Mauris rhoncus ipsum id erat dictum, quis porttitor lectus convallis. Sed eros arcu, aliquet vitae nisi non, mattis porttitor sem. Nunc vitae varius libero, nec suscipit urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque semper cursus commodo. Nunc ut orci in nunc euismod dignissim. Curabitur vitae posuere est.</Text>
           </View>
           <View marginT-20>

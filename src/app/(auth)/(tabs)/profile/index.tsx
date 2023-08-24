@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { View } from 'react-native-ui-lib';
 
 export default function Profile() {
+
   return (
     <SafeAreaProvider>
       <View bg-screenBG flex paddingH-15>

@@ -16,9 +16,9 @@ export default function Details() {
 
   useEffect(() => {
     (async function fetchData() {
-      let response: Chat[] = await getChats(false)
-      const index = response.findIndex( (x: Chat) => x.id == id)
-      setChat(response[index]);
+      let response: {data: Chat[]} = await getChats(false)
+      const index = response.data.findIndex( (x: Chat) => x.id == id)
+      setChat(response.data[index]);
     })()
   }, []);
 
