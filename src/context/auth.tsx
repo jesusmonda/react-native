@@ -18,7 +18,7 @@ export default function useProtectedRoute(protectedScreen: boolean, user: object
         !user
       ) {
         // Redirect to the login page.
-        router.replace('/login');
+        router.replace('/');
       } else if (user) {
         // Redirect away from the login page.
         router.replace('/home');
@@ -37,7 +37,7 @@ export function useAuth() {
     },
     signOut: () => {
       store.dispatch(init(null));
-      router.replace('/login');
+      router.replace('/');
     },
     user,
   }

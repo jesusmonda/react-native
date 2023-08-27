@@ -5,7 +5,7 @@ import { Colors } from 'react-native-ui-lib';
 import { store } from '../redux/store';
 require('react-native-ui-lib/config').setConfig({appScheme: 'dark'});
 
-export default function LoginLayout() {
+export default function AppLayout() {
   return (
     <Provider store={store}>
       <Stack
@@ -17,13 +17,6 @@ export default function LoginLayout() {
         >
         <Stack.Screen
           name="index"
-          options={{
-            headerShown: false,
-          }}
-        />
-
-        <Stack.Screen
-          name="login"
           options={{
             headerShown: false,
           }}
@@ -46,3 +39,26 @@ export default function LoginLayout() {
   </Provider>
   );
 }
+
+Colors.loadColors({
+  primaryTextLight: '#1c1c1c',
+  secondaryTextLight: '#a5a5a5',
+  primaryTextDark: '',
+  secondaryTextDark: '',
+  primaryColor: '#027fe9',
+});
+
+Colors.loadSchemes({
+  light: {
+    screenBG: '#fff',
+    primaryText: Colors.primaryTextLight,
+    secondaryText: Colors.secondaryTextLight,
+    primaryColor: Colors.primaryColor,
+  },
+  dark: {
+    screenBG: '#000',
+    primaryText: Colors.primaryTextDark,
+    secondaryText: Colors.secondaryTextDark,
+    primaryColor: Colors.primaryColor,
+  }
+});

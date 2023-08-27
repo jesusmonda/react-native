@@ -54,7 +54,6 @@ export default function Home() {
               chats === undefined ? <Text>Cargando...</Text> :
               chats.map((item:Chat)=> (
                 <ListItem
-                  br20
                   activeBackgroundColor={Colors.grey60}
                   activeOpacity={0.8}
                   key={item.id}
