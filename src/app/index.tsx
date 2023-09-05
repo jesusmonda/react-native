@@ -7,8 +7,7 @@ import login from '../services/loginService';
 import type { Login } from '../types/loginType';
 
 export default function App() {
-
-  useProtectedRoute(false);
+  useProtectedRoute("nonAutenticated");
   
   const onLogin = async function() {
     try {

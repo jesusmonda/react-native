@@ -1,30 +1,29 @@
 import { useRootNavigation, usePathname, router } from "expo-router";
-import React from "react";
+import { useEffect } from "react";
 import { init } from "../redux/reducers/loginSlice";
 import { store } from "../redux/store";
 import { Login } from "../types/loginType";
 
 // This hook will protect the route access based on user authentication.
-export default function useProtectedRoute(protectedScreen: boolean, user: object | undefined = undefined) {
+export default function useProtectedRoute(protectedScreen: string, user: Login | undefined = undefined) {
   const pathname = usePathname();
   const navigationState = useRootNavigation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log("Accediendo a la url", pathname, "con el usuario", user)
-
-    if (navigationState?.isReady && protectedScreen){
-      if (
-        // If usernot signed in and the initial segment is not anything in the auth group.
-        !user
-      ) {
-        // Redirect to the login page.
-        router.replace('/');
-      } else if (user) {
-        // Redirect away from the login page.
-        router.replace('/home');
+    
+    if (navigationState?.isReady){
+      if (protectedScreen === "autenticated") {
+        // TODO Validar token, si es invalido redireccionar a /
+        console.log("vista autentificada")
+      } else if(protectedScreen === "nonAutenticated") {
+        console.log("vista no autentificada", user)
+        if (user) {
+          router.replace('/');
+        }
       }
     }
-  }, [user, navigationState]);
+  });
 }
 
 export function useAuth() {

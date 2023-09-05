@@ -2,15 +2,17 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, Link } from 'expo-router';
 import { View, Text, Colors, Button, TextField, ListItem } from 'react-native-ui-lib';
 import { Ionicons } from '@expo/vector-icons';
 import getChats from '../../../../services/chatService';
 import type { Chat } from '../../../../types/chatType';
 import ChatItem from '../../../../components/chatItem';
-import { useAuth } from '../../../../context/auth';
+import useProtectedRoute, { useAuth } from '../../../../context/auth';
 
 export default function Home() {
+  useProtectedRoute("autenticated", useAuth().user);
+
   const [chats, setChats] = useState<Chat[]>();
   const [refresh, setRefresh] = useState<boolean>(false);
 
@@ -45,6 +47,7 @@ export default function Home() {
             <Button label={'Press'} size={Button.sizes.large} link={true} color={Colors.secondaryText} />
           </View>
           <View marginT-20>
+            <Link href="/">Ir al login</Link>
             <Text color={Colors.primaryText} text40>Usuario logeado {useAuth().user.username}</Text>
             <Text color={Colors.secondaryText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pellentesque dui eu justo tincidunt, non sodales quam interdum. Aliquam aliquam ornare enim porta condimentum. In nec nisl aliquam, suscipit nunc sed, sollicitudin sem. In tincidunt sed mi eu elementum. Praesent dui orci, dignissim id diam at, ullamcorper finibus tellus. Nullam sapien enim, ultrices eu eleifend ac, pulvinar id elit. Fusce at dignissim ante, at dignissim purus. Mauris rhoncus ipsum id erat dictum, quis porttitor lectus convallis. Sed eros arcu, aliquet vitae nisi non, mattis porttitor sem. Nunc vitae varius libero, nec suscipit urna. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Quisque semper cursus commodo. Nunc ut orci in nunc euismod dignissim. Curabitur vitae posuere est.</Text>
           </View>
